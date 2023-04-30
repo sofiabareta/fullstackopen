@@ -1,25 +1,52 @@
-import { useState } from 'react'
+const Header = ({text}) => <h1>{text}</h1>
 
-const Botao = (props) => (
-  <button onClick={props.handleClique}>
-    {props.texto}
-  </button>
-)
+const Content = ({parts}) => {
+  return (
+    <>
+      <p>
+        {parts[0].name} {parts[0].exercises}
+      </p>
+      <p>
+        {parts[1].name} {parts[1].exercises}
+      </p>
+      <p>
+        {parts[2].name} {parts[2].exercises}
+      </p>
+    </>
+  )
+}
+
+const Total = ({parts}) => {
+  const total = parts[0].exercises + parts[1].exercises + parts[2].exercises
+  return (
+    <p>Number of exercises {total}</p>
+  )
+}
 
 const App = () => {
-  const [valor, setValor] = useState(10)
-
-  const setNoValor = (novoValor) => {
-    console.log('setValor atual', novoValor)
-    setValor(novoValor)
+  const course = {
+    name: 'Desenvolvimento de aplicação Half Stack',
+    parts: [
+      {
+        name: 'Fundamentos da biblioteca React',
+        exercises: 10
+      },
+      {
+        name: 'Usando props para passar dados',
+        exercises: 7
+      },
+      {
+        name: 'Estado de um componente',
+        exercises: 14
+      }
+    ]
   }
 
   return (
     <div>
-      {valor}
-      <Botao handleClique={setNoValor(1000)} texto="mil" />
-      <Botao handleClique={setNoValor(0)} texto="zerar" />
-      <Botao handleClique={setNoValor(valor + 1)} texto="incrementar" />
+      <Header text={course.name}/>
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   )
 }
