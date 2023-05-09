@@ -3,7 +3,7 @@
     {
       "id": 1,
       "content": "HTML é fácil",
-      "important": true
+      "important": false
     },
     {
       "id": 2,
@@ -13,7 +13,17 @@
     {
       "id": 3,
       "content": "GET e POST são os métodos mais importantes do protocolo HTTP",
-      "important": true
+      "important": false
+    },
+    {
+      "content": "nova nota",
+      "important": false,
+      "id": 4
+    },
+    {
+      "content": "nova nota",
+      "important": false,
+      "id": 5
     }
   ]
 }

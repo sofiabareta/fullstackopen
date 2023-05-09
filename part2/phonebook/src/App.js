@@ -3,14 +3,10 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import PersonsService from './services/persons'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [newSearch, setNewSearch] = useState('')
@@ -18,27 +14,29 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    PersonsService
+      .getAll()
+      .then(personList => {
+        setPersons(personList)
       })
   }, [])
 
   const addNewName = (event) => {
     event.preventDefault();
     const isSame = persons.filter(person => newName === person.name)
+    const newPerson = {
+      name: newName,
+      id: persons.length + 1,
+      number: newPhone
+    }
+    if (isSame.length > 0) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the older number with a new one?`)) {
 
-    if (isSame.length > 0) 
-        alert(`${newName} is already added to phonebook`)      
-    else {
-      const newPerson = {
-          name: newName,
-          id: persons.length + 1,
-          number: newPhone
-        }
-    
-        setPersons(persons.concat(newPerson))
+        window.open(PersonsService.update(isSame[0].id, newPerson), "Thanks for Visiting!");
+      }
+    }
+    else {    
+        setPersons(PersonsService.create(newPerson).then(person => person))
     }
   }
 
@@ -76,7 +74,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {namesToShow.map((person) => 
-          <Persons key={person.id} name={person.name} number={person.number}/>
+          <Persons key={person.id} name={person.name} number={person.number} id={person.id}/>
         )}
       </ul>
     </div>
