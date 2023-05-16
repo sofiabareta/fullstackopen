@@ -1,0 +1,12 @@
+h1 {
+    background-color: lightgray;
+    color: green;
+    border: 2px solid green;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+h1.error {
+    color: red;
+    border-color: red;
+}
