@@ -8,22 +8,6 @@ function App() {
   const [searchList, setSearchList] = useState([])
   const [error, setError] = useState(false)
   const [fullInfo, setFullInfo] = useState(false)
-  const [imageData, setImageData] = useState('');
-
-  useEffect(() => {
-    // console.log(searchList, "effect", error, fullInfo)
-    if (searchList.length == 1) {
-
-      fetch(searchList[0].flags.png)
-          .then(response => response.blob())
-          .then(image => {
-              // Create a local URL of that image
-              const localUrl = URL.createObjectURL(image);
-              setImageData(localUrl);
-          });
-    }
-
-  }, [searchList, fullInfo])
 
   const handleSearch = (event) => {
     setSearch(event.target.value)
@@ -78,7 +62,7 @@ function App() {
           capital={searchList[0].capital}
           area={searchList[0].area}
           languages={searchList[0].languages}
-          flag={imageData}
+          flag={searchList[0].flags.png}
         />
         :
         <>
