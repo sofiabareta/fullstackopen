@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import FullInfo from "./components/FullInfo";
+import WheatherReport from "./components/WheatherReport";
 import CountriesServices from "./services/countries"
-
 
 function App() {
   const [search, setSearch] = useState()
@@ -57,13 +57,20 @@ function App() {
       </form>
       {
         fullInfo ? 
-        <FullInfo 
-          name={searchList[0].name.common}
-          capital={searchList[0].capital}
-          area={searchList[0].area}
-          languages={searchList[0].languages}
-          flag={searchList[0].flags.png}
-        />
+        <>
+          <FullInfo 
+            name={searchList[0].name.common}
+            capital={searchList[0].capital}
+            area={searchList[0].area}
+            languages={searchList[0].languages}
+            flag={searchList[0].flags.png}
+          />
+          <WheatherReport 
+            lat={searchList[0].latlng[0]}
+            lon={searchList[0].latlng[1]}
+            capital={searchList[0].capital}
+          />
+        </>
         :
         <>
           {error ?
