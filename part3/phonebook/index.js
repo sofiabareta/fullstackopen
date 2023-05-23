@@ -6,9 +6,9 @@ const app = express() // SECOND --> STORE EXPRESS FUNCTION TO CREATE EXPRESS APP
 
 morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
 
+app.use(cors())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(express.json()) // THIRD --> COMMAND TO PARSE JSON (MIDDLEWARE)
-app.use(cors())
 app.use(express.static('build'))
 
 // FOURTH --> INIT SERVER
