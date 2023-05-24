@@ -3,8 +3,8 @@ import PersonsService from '../services/persons'
 const Persons = ({id, name, number}) => {
     const buttonHandle = id => {
         if (window.confirm(`Are you sure to delete person ${id}?`)) {
-            window.open(PersonsService.remove(id), "Thanks for Visiting!");
-          }
+            window.open(PersonsService.remove(id), "");
+        }
     }
     return (
         <>
