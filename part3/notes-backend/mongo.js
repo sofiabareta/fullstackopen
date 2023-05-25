@@ -14,15 +14,16 @@ const url =
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
-const Note = mongoose.model('Note', {
+const noteSchema = new mongoose.Schema({
   content: {
     type: String,
     minLength: 5,
     required: true
   },
-  date: Date,
-  important: Boolean,
+  important: Boolean
 })
+
+const Note = mongoose.model('Note', noteSchema)
 
 const note = new Note({
   content: 'Promise auttaa asynkronisissa operaatiossa',

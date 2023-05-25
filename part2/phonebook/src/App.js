@@ -58,7 +58,8 @@ const App = () => {
                     setErrorStatus(false)
                 })
             .catch(error => {
-                console.log(error.response.data.error)
+                setErrorMessage(error.response.data.error)
+                setErrorStatus(true)
             })
         }
         clearFields()
