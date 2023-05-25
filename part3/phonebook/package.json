@@ -7,7 +7,9 @@
     "start": "node index.js && rm -rf build && cd ../../part2/phonebook && npm run build && cp -r build ../../part3/phonebook",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "npm start && rm -rf build && cd ../../part2/phonebook && npm run build && cp -r build ../../part3/phonebook"
+    "build:ui": "npm start && rm -rf build && cd ../../part2/phonebook && npm run build && cp -r build ../../part3/phonebook",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
@@ -19,5 +21,8 @@
     "mongoose": "^7.2.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "eslint": "^8.41.0"
   }
 }
