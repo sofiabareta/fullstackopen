@@ -13,16 +13,6 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 app.use(express.json()) // THIRD --> COMMAND TO PARSE JSON (MIDDLEWARE)
 app.use(express.static('build'))
 
-const errorHandler = (error, request, response, next) => {
-    console.error(error.message)
-
-    if (error.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id' })
-    } 
-
-    next(error)
-}
-
 app.get('/api/persons', (request, response) => {
     Person.find({}).then(person => {
         response.json(person)
@@ -80,7 +70,20 @@ app.post('/api/persons', (request, response) => {
     person.save().then(savedPerson => {
       response.json(savedPerson)
     })
+    .catch(error => next(error))
   })
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message })
+    }
+
+    next(error)
+}
 
 app.use(errorHandler)
 

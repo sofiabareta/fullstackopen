@@ -14,26 +14,34 @@ const url =
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
-const noteSchema = new mongoose.Schema({
-  content: String,
+const Note = mongoose.model('Note', {
+  content: {
+    type: String,
+    minLength: 5,
+    required: true
+  },
+  date: Date,
   important: Boolean,
 })
 
-const Note = mongoose.model('Note', noteSchema)
-
 const note = new Note({
-  content: 'HTML is Easy',
-  important: true,
+  content: 'Promise auttaa asynkronisissa operaatiossa',
+  date: new Date(),
+  important: false,
 })
 
-// note.save().then(result => {
-//   console.log('note saved!')
-//   mongoose.connection.close()
-// })
-
-Note.find({}).then(result => {
-    result.forEach(note => {
-      console.log(note)
-    })
+if (false) {
+  note.save().then(response => {
+    console.log('note saved!')
     mongoose.connection.close()
   })
+}
+
+
+
+Note.find({}).then(result => {
+  result.forEach(note => {
+    console.log(note)
+  })
+  mongoose.connection.close()
+})

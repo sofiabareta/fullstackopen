@@ -57,6 +57,9 @@ const App = () => {
                     setPersons(persons.concat(person))
                     setErrorStatus(false)
                 })
+            .catch(error => {
+                console.log(error.response.data.error)
+            })
         }
         clearFields()
     }
