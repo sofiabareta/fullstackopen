@@ -1,8 +1,8 @@
-const dummy = (blogs) => {
+const dummy = blogs => {
   return 1
 }
 
-const totalLikes = (blogs) => {
+const totalLikes = blogs => {
   if (blogs.length === 0) {
     return 0
   }
@@ -12,7 +12,14 @@ const totalLikes = (blogs) => {
   return likes
 }
 
+const favoriteBlog = blogs => {
+  const moreLikes = blogs.reduce((prev, current) => prev.likes > current.likes ? prev : current)
+
+  return { title: moreLikes.title, author: moreLikes.author, likes: moreLikes.likes }
+}
+
 module.exports = {
   dummy,
-  totalLikes
+  totalLikes,
+  favoriteBlog
 }
