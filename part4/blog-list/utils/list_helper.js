@@ -32,9 +32,26 @@ const mostBlogs = blogs => {
 
 }
 
+const mostLikes = blogs => {
+  let authorsList = {}
+
+  blogs.map(blog => {
+    const authorKey = blog.author
+    authorsList[authorKey] = authorsList[authorKey] === undefined ? blog.likes : authorsList[authorKey] + blog.likes
+  })
+
+  let mostLikedAuthor = Object.keys(authorsList).reduce((prev, current) => authorsList[prev] > authorsList[current] ? prev : current)
+
+  return {
+    'author': mostLikedAuthor,
+    'likes': authorsList[mostLikedAuthor]
+  }
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
