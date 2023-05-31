@@ -11,6 +11,7 @@ module.exports = {
   },
   'rules': {
     'eqeqeq': 'error',
+    'no-multi-spaces': ['error'],
     'no-trailing-spaces': 'error',
     'object-curly-spacing': [
       'error', 'always'
@@ -21,10 +22,6 @@ module.exports = {
     'indent': [
       'error',
       2
-    ],
-    'linebreak-style': [
-      'error',
-      'windows'
     ],
     'quotes': [
       'error',
