@@ -63,7 +63,21 @@ test('all blogs have "like" property', async () => {
     .expect(400)
     .expect('Content-Type', /application\/json/)
 
-}, 1000000)
+})
+
+test('all blogs have "title" and "url" property', async () => {
+  const newBlog = {
+    author: 'Pofinha',
+    likes: 3
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+})
 
 
 afterAll(async () => {
