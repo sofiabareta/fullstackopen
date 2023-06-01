@@ -11,6 +11,7 @@ blogsRouter.post('/', async (request, response) => {
 
   const result = await blog.save()
   response.status(201).json(result)
+
 })
 
 module.exports = blogsRouter

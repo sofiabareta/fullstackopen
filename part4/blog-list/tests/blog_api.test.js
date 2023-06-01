@@ -50,6 +50,21 @@ test('a new blog is added', async () => {
 
 })
 
+test('all blogs have "like" property', async () => {
+  const newBlog = {
+    title: 'Blog da pofinha',
+    author: 'Pofinha',
+    url: 'http://pofinha',
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+}, 1000000)
+
 
 afterAll(async () => {
   await mongoose.connection.close()
