@@ -88,6 +88,16 @@ test('deletion of a blog succeeds with status code 204 if id is valid', async ()
     .expect(204)
 })
 
+test('update of a blog likes number succeeds with status code 200 if id is valid', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToDelete = blogsAtStart[0]
+  const updatedField = { 'likes': blogToDelete.likes + 1 }
+
+  await api
+    .put(`/api/blogs/${blogToDelete.id}`, updatedField)
+    .expect(200)
+})
+
 
 afterAll(async () => {
   await mongoose.connection.close()
