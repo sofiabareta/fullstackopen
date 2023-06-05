@@ -3,9 +3,9 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 
 usersRouter.get('/', async (request, response) => {
-  const body = await User.find({})
+  const users = await User.find({}).populate('blogs')
 
-  response.json(body)
+  response.json(users)
 })
 
 usersRouter.post('/', async (request, response) => {
