@@ -1,12 +1,11 @@
 import { useState } from "react"
-import blogService from '../services/blogs'
 
-const BlogForm = () => {
+const BlogForm = ({ createBlog }) => {
     const [title, setTitle] = useState("")
     const [author, setAuthor] = useState("")
     const [url, setUrl] = useState("")
 
-    const handleClick = event => {
+    const handleCreateBlog = event => {
         event.preventDefault()
 
         const blogObj = {
@@ -15,8 +14,7 @@ const BlogForm = () => {
             url: url
         }
 
-        blogService
-            .create(blogObj)
+        createBlog(blogObj)
     }
 
     const handleAuthor = (e) => {
@@ -32,18 +30,15 @@ const BlogForm = () => {
     }
 
     return (
-        <>
-            <h2>Create new</h2>
-            <form>
-                <label htmlFor="title">Title:</label>
-                <input name="title" type="text" onChange={handleTitle} /><br />
-                <label htmlFor="author">Author:</label>
-                <input name="author" type="text" onChange={handleAuthor} /><br />
-                <label htmlFor="url">URL:</label>
-                <input name="url" type="text" onChange={handleUrl} />
-                <button onClick={handleClick}>Create</button>
-            </form>
-        </>
+        <form onSubmit={handleCreateBlog}>
+            <label htmlFor="title">Title:</label>
+            <input name="title" type="text" onChange={handleTitle} /><br />
+            <label htmlFor="author">Author:</label>
+            <input name="author" type="text" onChange={handleAuthor} /><br />
+            <label htmlFor="url">URL:</label>
+            <input name="url" type="text" onChange={handleUrl} />
+            <button>Create</button>
+        </form>
     )
 }
 
