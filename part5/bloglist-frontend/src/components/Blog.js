@@ -23,7 +23,14 @@ const Blog = ({ blog, user }) => {
     } catch (exception){
       console.log(exception)
     }
+  }
 
+  const removeBlog = async () => {
+    if (!window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      return null
+    }
+    
+    await blogService.remove(blog.id, blog)
   }
 
   return (
@@ -34,7 +41,12 @@ const Blog = ({ blog, user }) => {
         <p>{blog.url}</p>
         <span>likes {likes}</span>
         <button onClick={addLike}>like</button>
-        <p>{user}</p>
+        <p>{user.name}</p>
+        {
+          user.id && blog.user.id &&
+          user.id === blog.user.id &&
+            <button onClick={removeBlog}>Remove</button>
+        }
         </>
       }
     </div>  
