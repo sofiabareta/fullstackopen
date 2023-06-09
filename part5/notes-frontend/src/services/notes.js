@@ -35,5 +35,4 @@ const update = (id, newObject) => {
 }
 
 // ES6 Object initializer
-// eslint-disable-next-line import/no-anonymous-default-export
 export default { getAll, create, update, setToken }

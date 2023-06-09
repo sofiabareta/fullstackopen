@@ -25,8 +25,8 @@ const App = () => {
   const [notes, setNotes] = useState(null)
   const [newNote, setNewNote] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [showAll, setShowAll] = useState(false)
 
@@ -34,10 +34,10 @@ const App = () => {
 
   useEffect(() => {
     noteService
-    .getAll()
-    .then(initialNotes => {
-      setNotes(initialNotes)
-    })
+      .getAll()
+      .then(initialNotes => {
+        setNotes(initialNotes)
+      })
   }, [])
 
   useEffect(() => {
@@ -50,20 +50,20 @@ const App = () => {
   }, [])
 
   // do not render anything if notes is still null
-  if (!notes) { 
-    return null 
+  if (!notes) {
+    return null
   }
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
       })
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
-      ) 
+      )
       noteService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -75,7 +75,7 @@ const App = () => {
       }, 5000)
     }
   }
-  
+
   const addNote = (noteObject) => {
     noteFormRef.current.toggleVisibility()
     noteService
@@ -87,10 +87,10 @@ const App = () => {
   const toggleImportanceOf = (id) => {
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
-  
+
     noteService
       .update(id, changedNote)
-      .catch(error => {
+      .catch(() => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
         )
@@ -108,12 +108,12 @@ const App = () => {
   const notesToShow = showAll
     ? notes
     : notes.filter(note => note.important)
-  
-    const noteForm = () => (
-      <Togglable buttonLabel='new note' ref={noteFormRef}>
-        <NoteForm createNote={addNote} />
-      </Togglable>
-    )
+
+  const noteForm = () => (
+    <Togglable buttonLabel='new note' ref={noteFormRef}>
+      <NoteForm createNote={addNote} />
+    </Togglable>
+  )
 
   return (
     <div>
@@ -133,8 +133,8 @@ const App = () => {
       }
       {user && <div>
         <p>{user.name} logged in</p>
-          {noteForm()}
-        </div>
+        {noteForm()}
+      </div>
       }
 
       <h2>Notes</h2>
@@ -142,12 +142,12 @@ const App = () => {
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all' }
         </button>
-      </div> 
+      </div>
       <ul>
         <ul>
-          {notesToShow.map(note => 
-            <Note 
-              key={note.id} 
+          {notesToShow.map(note =>
+            <Note
+              key={note.id}
               note={note}
               toggleImportance={() => toggleImportanceOf(note.id)} />
           )}
