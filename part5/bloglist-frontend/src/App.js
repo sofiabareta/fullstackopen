@@ -7,10 +7,10 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [user, setUser] = useState("")
-  const [alertMessage, setAlertMessage] = useState("")
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
 
   const blogFormRef = useRef()
 
@@ -21,9 +21,8 @@ const App = () => {
         .then(blogs => {
           blogs.sort((a, b) => b.likes - a.likes)
           setBlogs( blogs )
-          console.log(blogs)
         }
-      )  
+        )
     }
   }, [user])
 
@@ -38,7 +37,7 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -46,7 +45,7 @@ const App = () => {
 
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
-      ) 
+      )
 
       blogService.setToken(user.token)
       setUser(user)
@@ -55,14 +54,14 @@ const App = () => {
       setAlertMessage('')
     } catch (exception) {
       setTimeout(() => {
-        setAlertMessage("Wrong username or password")
+        setAlertMessage('Wrong username or password')
       }, 2000)
-    
+
     }
   }
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogappUser') 
+    window.localStorage.removeItem('loggedBlogappUser')
     setUser('')
     setAlertMessage('')
   }
@@ -72,7 +71,7 @@ const App = () => {
       <p>{alertMessage}</p>
       <div>
         username
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -81,7 +80,7 @@ const App = () => {
       </div>
       <div>
         password
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
@@ -89,39 +88,39 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
   )
 
   const addBlog = blogObject => {
     blogFormRef.current.toggleVisibility()
 
     blogService
-        .create(blogObject)
-        .then(response => {
-          setAlertMessage(`a new blog ${response.title} by ${response.author} added`)
-        })
-        .then(response =>  blogService
-          .getAll()
-          .then(blogs => setBlogs( blogs )))
+      .create(blogObject)
+      .then(response => {
+        setAlertMessage(`a new blog ${response.title} by ${response.author} added`)
+      })
+      .then(() =>  blogService
+        .getAll()
+        .then(blogs => setBlogs( blogs )))
   }
 
   return (
     <div>
-      {!user && loginForm()} 
+      {!user && loginForm()}
       {user && <>
-          <p>{user.name} logged in</p>
-          <button onClick={handleLogout}>logout</button>
-          <p>{alertMessage}</p>
-          <Togglable buttonLabel="Create new blog" ref={blogFormRef}>
-            <h2>Create new</h2>
-            <BlogForm createBlog={addBlog}/>
-          </Togglable>
-          <h2>blogs</h2>
-            {
-              blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} user={user} />
-            )}
-        </>
+        <p>{user.name} logged in</p>
+        <button onClick={handleLogout}>logout</button>
+        <p>{alertMessage}</p>
+        <Togglable buttonLabel="Create new blog" ref={blogFormRef}>
+          <h2>Create new</h2>
+          <BlogForm createBlog={addBlog}/>
+        </Togglable>
+        <h2>blogs</h2>
+        {
+          blogs.map(blog =>
+            <Blog key={blog.id} blog={blog} user={user} />
+          )}
+      </>
       }
     </div>
   )
