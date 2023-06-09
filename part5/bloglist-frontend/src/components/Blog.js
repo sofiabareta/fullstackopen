@@ -13,6 +13,8 @@ const Blog = ({ blog, user }) => {
     marginBottom: 5
   }
 
+  if (!blog.user) return null
+
   const addLike = async () => {
     blog.likes = blog.likes + 1 || 1
 
@@ -34,10 +36,11 @@ const Blog = ({ blog, user }) => {
   }
 
   return (
-    <div style={blogStyle}>
-      <span>{blog.title} {blog.author}</span>
+    <div style={blogStyle} className='blog'>
+      <span>{blog.title}</span>
+      <span>{blog.author}</span>
       <button onClick={() => setShow(!show)}>{show ? 'hide' : 'show'}</button>
-      {show && <>
+      <div style={{ display: show ? 'block' : 'none' }}>
         <p>{blog.url}</p>
         <span>likes {likes}</span>
         <button onClick={addLike}>like</button>
@@ -47,8 +50,7 @@ const Blog = ({ blog, user }) => {
           user.id === blog.user.id &&
             <button onClick={removeBlog}>Remove</button>
         }
-      </>
-      }
+      </div>
     </div>
   )
 }
