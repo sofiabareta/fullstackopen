@@ -5,7 +5,13 @@ describe('Blog app', function() {
       username: 'usertest',
       password: 'test'
     }
+
+    const anotherUser = {
+      username: 'anotherusertest',
+      password:'test'
+    }
     cy.request('POST', 'http://localhost:3001/api/users/', user)
+    cy.request('POST', 'http://localhost:3001/api/users/', anotherUser)
     cy.visit('http://localhost:3001')
   })
 
@@ -60,6 +66,31 @@ describe('Blog app', function() {
           .contains('Remove')
           .click()
       })
+    })
+  })
+
+  describe('When having different users', function() {
+    beforeEach(function() {
+      cy.get('input:first()').type('usertest')
+      cy.get('input:last()').type('test')
+      cy.get('button').click()
+    })
+
+    it('should not allow other user to remove another users`s blog', function () {
+      cy.contains('Create new blog').click()
+      cy.get('input[name=\'title\']').type('Title')
+      cy.get('input[name=\'author\']').type('Author')
+      cy.get('input[name=\'url\']').type('URL')
+
+      cy.get('button[type="submit"]').click()
+
+      cy.contains('logout').click()
+
+      cy.get('input:first()').type('anotherusertest')
+      cy.get('input:last()').type('test')
+      cy.get('button').click()
+
+      cy.get('.blog:first()').contains('Remove').should('not.exist')
     })
   })
 })
