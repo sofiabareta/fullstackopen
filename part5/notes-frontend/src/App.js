@@ -16,19 +16,20 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      <em>Note app, Department of Computer Science, University of Helsinki 2022</em>
+      <em>Note app, Department of Computer Science, University of Helsinki 2023</em>
     </div>
   )
 }
 
 const App = () => {
   const [notes, setNotes] = useState(null)
-  const [newNote, setNewNote] = useState('')
+  // const [newNote, setNewNote] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [showAll, setShowAll] = useState(false)
+  const [isComplete, setIsComplete] = useState(false)
 
   const noteFormRef = useRef()
 
@@ -38,7 +39,7 @@ const App = () => {
       .then(initialNotes => {
         setNotes(initialNotes)
       })
-  }, [])
+  }, [ isComplete ])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -69,7 +70,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -87,9 +88,14 @@ const App = () => {
   const toggleImportanceOf = (id) => {
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
+    console.log(notes)
 
     noteService
       .update(id, changedNote)
+      .then(() => {
+        setIsComplete(!isComplete)
+        console.log(isComplete)
+      })
       .catch(() => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
@@ -101,9 +107,9 @@ const App = () => {
       })
   }
 
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value)
-  }
+  // const handleNoteChange = (event) => {
+  //   setNewNote(event.target.value)
+  // }
 
   const notesToShow = showAll
     ? notes
@@ -111,7 +117,7 @@ const App = () => {
 
   const noteForm = () => (
     <Togglable buttonLabel='new note' ref={noteFormRef}>
-      <NoteForm createNote={addNote} />
+      <NoteForm createNote={addNote} user={user} />
     </Togglable>
   )
 
@@ -153,13 +159,6 @@ const App = () => {
           )}
         </ul>
       </ul>
-      <Togglable buttonLabel="new note">
-        <NoteForm
-          onSubmit={addNote}
-          value={newNote}
-          handleChange={handleNoteChange}
-        />
-      </Togglable>
       <Footer />
     </div>
   )
