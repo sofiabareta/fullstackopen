@@ -31,13 +31,13 @@ const BlogForm = ({ createBlog }) => {
 
   return (
     <form onSubmit={handleCreateBlog}>
-      <label htmlFor="title">Title:</label>
-      <input name="title" type="text" onChange={handleTitle} /><br />
-      <label htmlFor="author">Author:</label>
-      <input name="author" type="text" onChange={handleAuthor} /><br />
-      <label htmlFor="url">URL:</label>
-      <input name="url" type="text" onChange={handleUrl} />
-      <button>Create</button>
+      <label htmlFor="title" id="title">Title:</label>
+      <input name="title" aria-labelledby="title" type="text" onChange={handleTitle} /><br />
+      <label htmlFor="author" id="author">Author:</label>
+      <input name="author" aria-labelledby="author" type="text" onChange={handleAuthor} /><br />
+      <label htmlFor="url" id="url">URL:</label>
+      <input name="url" aria-labelledby="url" type="text" onChange={handleUrl} />
+      <button type="submit">Create</button>
     </form>
   )
 }

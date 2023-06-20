@@ -7,6 +7,7 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [show, setShow] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState('')
@@ -118,7 +119,7 @@ const App = () => {
         <h2>blogs</h2>
         {
           blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} user={user} />
+            <Blog key={blog.id} blog={blog} user={user} toggleBlogInfo={() => setShow(!show)}/>
           )}
       </>
       }

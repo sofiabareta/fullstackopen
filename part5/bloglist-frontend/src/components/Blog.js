@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, user }) => {
-  const [show, setShow] = useState(false)
+const Blog = ({ blog, user, toggleBlogInfo }) => {
   const [likes, setLikes] = useState(blog.likes || 0)
 
   const blogStyle = {
@@ -39,8 +38,8 @@ const Blog = ({ blog, user }) => {
     <div style={blogStyle} className='blog'>
       <span>{blog.title}</span>
       <span>{blog.author}</span>
-      <button onClick={() => setShow(!show)}>{show ? 'hide' : 'show'}</button>
-      <div style={{ display: show ? 'block' : 'none' }}>
+      <button onClick={toggleBlogInfo} className='button__toggle'>{toggleBlogInfo ? 'hide' : 'show'}</button>
+      <div style={{ display: toggleBlogInfo ? 'block' : 'none' }}>
         <p>{blog.url}</p>
         <span>likes {likes}</span>
         <button onClick={addLike}>like</button>
