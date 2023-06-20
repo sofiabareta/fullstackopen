@@ -11,7 +11,8 @@ const BlogForm = ({ createBlog }) => {
     const blogObj = {
       title: title,
       author: author,
-      url: url
+      url: url,
+      likes: 0
     }
 
     createBlog(blogObj)

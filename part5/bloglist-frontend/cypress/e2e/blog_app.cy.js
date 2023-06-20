@@ -66,6 +66,19 @@ describe('Blog app', function() {
           .contains('Remove')
           .click()
       })
+
+      it('can create another blog, like and sort the list', function(){
+        cy.contains('Create new blog').click()
+        cy.get('input[name=\'title\']').type('Title2')
+        cy.get('input[name=\'author\']').type('Author2')
+        cy.get('input[name=\'url\']').type('URL2')
+
+        cy.get('button[type="submit"]').click()
+
+        cy.get('.blog').eq(1).find('#button__like').click()
+        cy.get('.blog').eq(0).should('contain', 'Title2')
+        cy.get('.blog').eq(1).should('contain', 'Title')
+      })
     })
   })
 

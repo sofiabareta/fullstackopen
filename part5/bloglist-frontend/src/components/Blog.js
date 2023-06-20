@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, user, toggleBlogInfo }) => {
+const Blog = ({ blog, user, toggleBlogInfo, addNewLike }) => {
   const [likes, setLikes] = useState(blog.likes || 0)
 
   const blogStyle = {
@@ -15,11 +15,13 @@ const Blog = ({ blog, user, toggleBlogInfo }) => {
   if (!blog.user) return null
 
   const addLike = async () => {
+
     blog.likes = blog.likes + 1 || 1
 
     const response = await blogService.update(blog.id, blog)
 
     try {
+      addNewLike()
       setLikes(response.likes)
     } catch (exception){
       console.log(exception)
@@ -42,7 +44,7 @@ const Blog = ({ blog, user, toggleBlogInfo }) => {
       <div style={{ display: toggleBlogInfo ? 'block' : 'none' }}>
         <p>{blog.url}</p>
         <span>likes {likes}</span>
-        <button onClick={addLike}>like</button>
+        <button onClick={addLike} id="button__like">like</button>
         <p>{user.name}</p>
         {
           user.id && blog.user.id &&
