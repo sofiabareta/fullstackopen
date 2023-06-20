@@ -54,6 +54,12 @@ describe('Blog app', function() {
           .contains('like')
           .click()
       })
+
+      it('it can be removed', function () {
+        cy.get('.blog:first()')
+          .contains('Remove')
+          .click()
+      })
     })
   })
 })
