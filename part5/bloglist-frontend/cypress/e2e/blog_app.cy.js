@@ -39,13 +39,21 @@ describe('Blog app', function() {
       cy.get('button').click()
     })
 
-    it('A blog can be created', function() {
-      cy.contains('Create new blog').click()
-      cy.get('input[name=\'title\']').type('Title')
-      cy.get('input[name=\'author\']').type('Author')
-      cy.get('input[name=\'url\']').type('URL')
+    describe('and a blog exists', function () {
+      beforeEach(function () {
+        cy.contains('Create new blog').click()
+        cy.get('input[name=\'title\']').type('Title')
+        cy.get('input[name=\'author\']').type('Author')
+        cy.get('input[name=\'url\']').type('URL')
 
-      cy.get('button[type="submit"]').click()
+        cy.get('button[type="submit"]').click()
+      })
+
+      it('it can be liked', function () {
+        cy.get('.blog:first()')
+          .contains('like')
+          .click()
+      })
     })
   })
 })
