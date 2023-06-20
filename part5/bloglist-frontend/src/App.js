@@ -92,8 +92,9 @@ const App = () => {
     </form>
   )
 
-  const addBlog = blogObject => {
+  const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
+    blogObject.user = user
 
     blogService
       .create(blogObject)
